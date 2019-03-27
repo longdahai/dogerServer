@@ -13,6 +13,7 @@ use addons\doger\model\Userbasicinfo;
 use addons\doger\model\Userfriend;
 use addons\doger\model\Usermatch;
 use think\Db;
+use think\Log;
 use think\response\Json;
 
 class User extends Base

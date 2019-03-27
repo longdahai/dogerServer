@@ -14,6 +14,7 @@ use think\exception\ValidateException;
 use think\Hook;
 use think\Lang;
 use think\Loader;
+use think\Log;
 use think\Request;
 use think\Response;
 
@@ -68,11 +69,7 @@ class Api
         }
         else
         {
-            // 如果有传递token才验证是否登录状态
-            if ($token)
-            {
-                $this->auth->init($token);
-            }
+            $this->auth->init($token);
         }
 
         $upload = \app\common\model\Config::upload();

@@ -17,6 +17,7 @@ use think\Config;
 use think\Db;
 use think\Exception;
 use think\Hook;
+use think\Log;
 use think\Request;
 
 class Auth
@@ -63,7 +64,13 @@ class Auth
         $data = Token::get($token);
 
         if (!$data) {
-            return false;
+            //token不存在，尝试code登录
+            Log::write('token登录失败,尝试code登录，token:'.$token,'info');
+            if($this->login()){
+                return true;
+            } else {
+                return false;
+            }
         }
 
         $user_id = intval($data['user_id']);
@@ -92,7 +99,11 @@ class Auth
     {
         $config = get_addon_config('doger');
         $code = Request::instance()->param('code');
+
         $rawData = Request::instance()->param('rawData');
+        //记录请求参数
+        Log::write('换取微信openid,code is:'.$code.'  rawData is：'.$rawData,'info');
+
         if (!$code || !$rawData) {
             $this->setError("参数不正确");
         }
@@ -107,12 +118,12 @@ class Auth
         ];
 
         $result = Http::sendRequest("https://api.weixin.qq.com/sns/jscode2session", $params, 'GET');
+        //记录微信登录接口返回
+        Log::write('微信登录返回： '.$result['msg'],'info');
 
         if (isset($result['ret'])) {
             $json = (array)json_decode($result['msg'], true);
             if (isset($json['openid'])) {
-                //如果存在用户，则更新
-                $user = User::get(['openid' => $json['openid']]);
                 $data = [
                     'openid' => $json['openid'],
                     'unionid' => isset($json['unionid'])? $json['unionid']:'',
@@ -124,6 +135,8 @@ class Auth
                     'province' => $userInfo['province'],
                     'city' => $userInfo['city']
                 ];
+                //如果存在用户，则更新
+                $user = User::get(['openid' => $json['openid']]);
                 if ($user) {
                     $extend = [
                         'id' => $user['id']

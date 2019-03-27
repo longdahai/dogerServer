@@ -22,13 +22,13 @@ return [
     // 用户名
     'username'        => Env::get('database.username', 'root'),
     // 密码
-    'password'        => Env::get('database.password', 'root'),
+    'password'        => Env::get('database.password', 'qH7swX!@#j0RmSJ0IhZ'),
     // 端口
     'hostport'        => Env::get('database.hostport', ''),
     // 连接dsn
     'dsn'             => '',
     // 数据库连接参数
-    'params'          => [PDO::ATTR_CASE=> PDO::CASE_LOWER],
+    'params'          => [],
     // 数据库编码默认采用utf8
     'charset'         => Env::get('database.charset', 'utf8'),
     // 数据库表前缀
