@@ -50,12 +50,7 @@ class Prefer extends Base
             $data['lover_user_id']  = $user_id;
             $res = $prefer->allowField(true)->save($data);
         }
-
-        if($res){
-            $this->success('success',$res);
-        } else {
-            $this->error('failed');
-        }
+        $this->success('success',$res);
     }
 
     /**
