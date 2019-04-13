@@ -130,10 +130,7 @@ class Auth
                     'session_key' => $json['session_key'],
                     'gender' => $userInfo['gender'],
                     'nickname' => $userInfo['nickName'],
-                    'avatar' => $userInfo['avatarUrl'],
-                    'country' => $userInfo['country'],
-                    'province' => $userInfo['province'],
-                    'city' => $userInfo['city']
+                    'avatar' => $userInfo['avatarUrl']
                 ];
                 //如果存在用户，则更新
                 $user = User::get(['openid' => $json['openid']]);

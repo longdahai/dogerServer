@@ -19,7 +19,7 @@ class User extends Model
     // 定义时间戳字段名
     protected $createTime = 'createtime';
     protected $updateTime = 'updatetime';
-    protected $hidden = ['openid','signature','country','province','city','remark','unionid','updatetime'];
+    protected $hidden = ['openid','unionid','updatetime'];
     //用户基本资料
     public function basicinfo(){
         return $this->hasOne('Userbasicinfo','lover_user_id','id');
