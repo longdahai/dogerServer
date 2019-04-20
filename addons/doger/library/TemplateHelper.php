@@ -9,6 +9,8 @@
 namespace addons\doger\library;
 
 
+use addons\doger\model\Formid;
+use addons\doger\model\User;
 use EasyWeChat\Factory;
 
 class TemplateHelper
@@ -47,12 +49,31 @@ class TemplateHelper
         return $t;
     }
 
-    protected function send($openid, $tpid, $page, $formid, $data)
-    {
-
-    }
-
-    public function certFailed($user){
-
+    public function sendMessage($uid, $category="cert"){
+        $user = User::get($uid);
+        $tpid = "0L1utVwKLmKKVtPMh8-L_HJn0ZBxBcvvTCd73gTcfBg";
+        $f = Formid::get(['user_id' => $uid]);
+        $formid = $f['form_id'];
+        $data = [
+            "keyword1"=> [
+                "value"=>"身份及资料认证"
+            ],
+            "keyword2"=> [
+                "value"=>"未通过"
+            ],
+            "keyword3"=> [
+                "value"=>"图像模糊不清"
+            ],
+            "keyword4"=> [
+                "value"=>"请置于光线充足的地方，相机聚焦拍摄！"
+            ]
+        ];
+        $message_to_be_send = [
+            "touser" => $user['openid'],
+            "template_id" => $tpid,
+            "form_id" => $formid,
+            "data" => $data
+        ];
+        $r = $this->app->template_message->send($message_to_be_send);
     }
 }

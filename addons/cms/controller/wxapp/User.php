@@ -14,14 +14,12 @@ use think\Validate;
  */
 class User extends Base
 {
-
     protected $noNeedLogin = ['index', 'login'];
 
     protected $token = '';
 
     public function _initialize()
     {
-
         $this->token = $this->request->post('token');
         if ($this->request->action() == 'login' && $this->token) {
             $this->request->post(['token' => '']);
@@ -36,7 +34,6 @@ class User extends Base
         if ($ucenter && $ucenter['state']) {
             include ADDON_PATH . 'ucenter' . DS . 'uc.php';
         }
-
     }
 
     /**
@@ -132,7 +129,7 @@ class User extends Base
         $result = $validate->check($data);
         if (!$result) {
             $this->error(__($validate->getError()));
-            return FALSE;
+            return false;
         }
         $field = Validate::is($account, 'email') ? 'email' : (Validate::regex($account, '/^1\d{10}$/') ? 'mobile' : 'username');
         $user = \app\common\model\User::get([$field => $account]);
@@ -199,5 +196,4 @@ class User extends Base
         $user->save();
         $this->success('', ['userInfo' => $this->auth->getUserInfo()]);
     }
-
 }

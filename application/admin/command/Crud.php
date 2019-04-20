@@ -389,6 +389,7 @@ class Crud extends Command
         //加载主表的列
         $columnList = Db::query($sql, [$dbname, $modelTableName]);
         $fieldArr = [];
+        array_key_case($columnList);
         foreach ($columnList as $k => $v) {
             $fieldArr[] = $v['COLUMN_NAME'];
         }
@@ -398,6 +399,7 @@ class Crud extends Command
             $relationColumnList = Db::query($sql, [$dbname, $relation['relationTableName']]);
 
             $relationFieldList = [];
+            array_key_case($relationColumnList);
             foreach ($relationColumnList as $k => $v) {
                 $relationFieldList[] = $v['COLUMN_NAME'];
             }
@@ -731,7 +733,7 @@ class Crud extends Command
             $langList = implode(",\n", array_filter($langList));
 
             //表注释
-            $tableComment = $modelTableInfo['Comment'];
+            $tableComment = $modelTableInfo['comment'];
             $tableComment = mb_substr($tableComment, -1) == '表' ? mb_substr($tableComment, 0, -1) . '管理' : $tableComment;
 
             $modelInit = '';

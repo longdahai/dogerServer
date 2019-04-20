@@ -9,6 +9,7 @@
 namespace addons\doger\controller;
 
 
+use addons\doger\library\TemplateHelper;
 use addons\doger\library\Token;
 use addons\doger\model\Banner;
 use addons\doger\model\Tag;
@@ -254,6 +255,12 @@ class Common extends Api
             $this->success('success',$fileName);
         }
 
+    }
+
+    public function sendTest(){
+        $uid = $this->auth->__get('id');
+        $th = New TemplateHelper();
+        $th->sendMessage($uid);
     }
 
     /**

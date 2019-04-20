@@ -3,9 +3,9 @@
 return [
     'Lover_user_id'  =>  '用户id',
     'Target_user_id'  =>  '被举报人id',
-    'Type'  =>  '举报类型',
+    'Type'  =>  '举报问题类型',
     'Reportcontent'  =>  '举报原因',
-    'Reportimages'  =>  '截图-最多6张',
+    'Reportimages'  =>  '截图',
     'Createtime'  =>  '创建时间',
     'Updatetime'  =>  '更新时间',
     'Status'  =>  '状态',

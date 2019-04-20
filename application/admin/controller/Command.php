@@ -61,12 +61,12 @@ class Command extends Backend
         //加载主表的列
         $columnList = Db::query($sql, [$dbname, $table]);
         $fieldlist = [];
+        array_key_case($columnList);
         foreach ($columnList as $index => $item) {
             $fieldlist[] = $item['COLUMN_NAME'];
         }
         $this->success("", null, ['fieldlist' => $fieldlist]);
     }
-
     /**
      * 获取控制器列表
      * @internal
@@ -214,6 +214,5 @@ class Command extends Backend
         $this->model->save();
         return $result;
     }
-
 
 }

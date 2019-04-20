@@ -161,3 +161,18 @@ if (!function_exists('build_heading')) {
         return $result;
     }
 }
+
+/*
+ * 把多维数组的键值改为小写或大写  改变原数组
+ * @param  [type] &$array 要转换的一维或多维数组
+ * @param  [type] $case   小写 CASE_LOWER 大写 CASE_UPPER
+ * @return [type]         没有返回值
+ */
+function array_key_case(&$array, $case = CASE_UPPER) {
+    $array = array_change_key_case($array, $case);
+    foreach ($array as $key => $value) {
+        if (is_array($value)) {
+            array_key_case($array[$key], $case);
+        }
+    }
+}

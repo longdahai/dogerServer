@@ -29,12 +29,16 @@ class User extends Base
     public function login()
     {
         if ($this->auth->isLogin()) {
-            $data = $this->auth->getUser();
+            $data = $this->profile(null,$noajax = true);
+            $t = $this->auth->getUser();
+            $data = array_merge($data->toArray(),$t);
             $this->success('login success!', $data);
         } else {
             $this->auth->login();
             if ($this->auth->isLogin()) {
-                $data = $this->auth->getUser();
+                $data = $this->profile(null,$noajax = true);
+                $t = $this->auth->getUser();
+                $data = array_merge($data->toArray(),$t);
                 $this->success('login success!', $data);
             } else {
                 $this->error('login failed');
@@ -46,7 +50,7 @@ class User extends Base
      * 获取用户档案
      * #@param ids array 用户id列表
      */
-    public function profile($ids = null)
+    public function profile($ids = null,$noajax=false)
     {
         $profile_id = $this->request->param('userid');
         $user_id = $this->auth->__get('id');
@@ -91,8 +95,11 @@ class User extends Base
 //                }
             }
         }
-
-        $this->success('success', $res);
+        if ($noajax){
+            return $res;
+        } else {
+            $this->success('success', $res);
+        }
     }
 
     protected function getAllowIds($user_id)

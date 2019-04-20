@@ -48,7 +48,7 @@ class Backend extends Controller
     /**
      * 快速搜索时执行查找的字段
      */
-    protected $searchFields = 'id';
+    protected $searchFields = 'lover_user_id';
 
     /**
      * 是否是关联查询

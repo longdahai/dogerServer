@@ -62,7 +62,7 @@ class Command extends Backend
         $columnList = Db::query($sql, [$dbname, $table]);
         $fieldlist = [];
         foreach ($columnList as $index => $item) {
-            $fieldlist[] = $item['COLUMN_NAME'];
+            $fieldlist[] = $item['column_name'];
         }
         $this->success("", null, ['fieldlist' => $fieldlist]);
     }
